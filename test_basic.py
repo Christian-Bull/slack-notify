@@ -1,24 +1,59 @@
 # basic test file
 
+from datetime import datetime
+import logging
 from twitch import TwitchClient
+
 
 streams = [
     'odablock',
-    'amenityrs'
+    'amenityrs',
+    'lolnoneasdf'
 ]
 
-client = TwitchClient('69e1k9ao573ly7f9f5invl44v2axxk')
 
+# initiate logging
+def log():
+    now = datetime.now().date()
+
+    logging.basicConfig(
+        filename='log-{}.log'.format(now),
+        filemode='w',
+        format='%(asctime)s %(message)s'
+        )
+
+    logger = logging.getLogger()
+
+    # debug mode
+    logger.setLevel(logging.DEBUG)
+
+
+# tries to get the twitch client initiated
+def get_client():
+    try:
+        client = TwitchClient('69e1k9ao573ly7f9f5invl44v2axxk')
+        logger.info('Client connection successful')
+        return client
+    except:
+        logger.error('Client connection failure')
+
+
+# gets channel ids off channel names provided
 def get_ids():
-    users = client.users.translate_usernames_to_ids(streams)
+    try:
+        users = client.users.translate_usernames_to_ids(streams)
+    except:
+        print('lol')
 
-    u = {}
+    u = {}  
 
     for user in users:
         u[user.name] = user.id
 
     return u
+    
 
+# gets stream info for channel IDs
 def get_streams():
     u = get_ids()
 
@@ -33,4 +68,7 @@ def get_streams():
 
     return live_streamers
 
-print(get_streams())
+def main():
+    log()
+
+    
