@@ -13,28 +13,25 @@ streams = [
         'amenityrs'
         ]
 
+# sets some logging up
+now = datetime.now().date()
 
-# initiate logging
-def log():
-    now = datetime.now().date()
+logging.basicConfig(
+    filename='log-{}.log'.format(now),
+    filemode='w',
+    format='%(asctime)s %(message)s'    
+)
 
-    logging.basicConfig(
-        filename='log-{}.log'.format(now),
-        filemode='w',
-        format='%(asctime)s %(message)s'
-        )
+logger = logging.getLogger()
 
-    logger = logging.getLogger()
+# debug mode
+logger.setLevel(logging.DEBUG)
+logger.info('This bot is baaaad')
+logger.info('Logging started')
 
-    # debug mode
-    logger.setLevel(logging.DEBUG)
-    logger.info('This bot is baaaad')
-    logger.info('Logging started')
 
-    return logger
-    
 # creates twitch client, logs some stuff yo
-def get_client(logger):
+def get_client():
     try:
         client = TwitchClient('69e1k9ao573ly7f9f5invl44v2axxk')
         logger.info("Twitch client connection successful")
@@ -89,12 +86,10 @@ def get_info(client):
 
 # main still testing
 def main():
-    logger = log()              # creates logger
-    client = get_client(logger) # creates client
+    client = get_client() # creates client
     stuff = get_info(client)    # gets info
     
     print(stuff)
 
 
 main()
-# wanted to hit 100 lines lmao :wala:
