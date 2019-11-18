@@ -4,6 +4,7 @@
 from datetime import datetime
 import logging
 from twitch import TwitchClient
+from secrets import client_id
 
 # define channel names to check here, this is a stateless app
 # otherwise I'd define these externally somehow
@@ -33,7 +34,7 @@ logger.info('Logging started')
 # creates twitch client, logs some stuff yo
 def get_client():
     try:
-        client = TwitchClient('69e1k9ao573ly7f9f5invl44v2axxk')
+        client = TwitchClient(client_id())
         logger.info("Twitch client connection successful")
         return client
     except:
@@ -92,4 +93,4 @@ def main():
     print(stuff)
 
 
-main()
+
