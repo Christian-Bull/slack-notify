@@ -14,6 +14,13 @@ streams = [
         'amenityrs'
         ]
 
+stream_keys = [
+        'name',
+        'id',
+        'stream_type',
+        'viewers'
+        ]
+
 # sets some logging up
 now = datetime.now().date()
 
@@ -78,10 +85,16 @@ def get_info(client):
     # recursive func, goes through tree of dictionary to get values :wala:
     def getvalue(d):
         for k, v in d.items():
+            logger.info('dict {}'.format(k))
             if isinstance(v, dict):
+                logger.info('dict {}'.format(k))
                 getvalue(v)
             else:
-                print("{} : {}".format(k, v))
+                if k in stream_keys:
+                    stream = "{} : {}".format(k, v)
+                    logger.info(stream)
+                else:
+                    logger.info(k)
 
     return getvalue(live_degens)
 
@@ -91,6 +104,3 @@ def main():
     stuff = get_info(client)    # gets info
     
     print(stuff)
-
-
-

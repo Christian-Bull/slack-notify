@@ -13,10 +13,14 @@ import twitchstreams
 # slack config
 
 
+# twitch config
+client = twitchstreams.get_client()
+
+
 # main
 
 while True:
-    time.sleep(5)
+    time.sleep(10)
     print('test')
-
-
+    info = twitchstreams.get_info(client)
+    print(info)
