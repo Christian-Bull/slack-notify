@@ -22,7 +22,8 @@ def post_message(msg):
     data_json = json.dumps(msg)
     requests.post(hook, data=data_json)
 
-
+def get_streaminfo():
+    
 # main
 
 # client = twitchstreams.get_client()
