@@ -93,40 +93,24 @@ def get_info(client):
 
     # finds live streamers
     for k, v in streamer_info.items():
+        items = []
+        
         if v == None:
-            streamer_formatted[k] = 'Offline'
+            streamer_formatted[k] = ['Offline']
         else:
-            displayname = k
             def getvalue(d):
                 for k, v in d.items():
-                    if k in stream_keys:
-                        streamer_formatted[displayname]
+                    if isinstance(v, dict):
+                        getvalue(v)
                     else:
-                        if isinstance(v, dict):
-                            getvalue(v)
-
+                        if k in stream_keys:
+                            items.append(v)
 
             getvalue(v)
+
+        streamer_formatted[k] = items
     
     print(streamer_formatted)
-
-    # # recursive func, goes through tree of dictionary to get values :wala:
-    # def getvalue(d):
-    #     for k, v in d.items():
-    #         if k in stream_keys:
-    #             logger.info('{} : {}'.format(k, v))
-
-    #         if isinstance(v, dict):
-    #             #logger.info('dict {}'.format(k))
-    #             getvalue(v)
-
-    #         else:
-    #             if k in stream_keys:
-    #                 # streamer_formatted[k] = v
-    #                 #print(k, v)
-    #                 h = 10
-
-    # getvalue(streamer_info)
 
     logger.info("LIVE STREAMS ********************")  
     logger.info(streamer_formatted)
