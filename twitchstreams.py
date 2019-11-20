@@ -15,14 +15,14 @@ streams = [
         ]
 
 stream_keys = [
-        'name',
-        'id',
-        'stream_type',
-        'viewers',
-        'url',
-        'game',
-        'status',
-        'created_at'
+        'name',         # 0
+        'id',           # 1  
+        'stream_type'   # 2
+        'viewers',      # 3
+        'url',          # 4
+        'game',         # 5
+        'status'        # 6
+        'created_at'    # 7
         ]
 
 
@@ -57,7 +57,7 @@ def get_ids(client):
     try:
         users = client.users.translate_usernames_to_ids(streams)
     except:
-        print('lol')
+        print('unable to get ids for specified users')
 
     degenerates = {}
 
@@ -93,11 +93,16 @@ def get_info(client):
 
     # finds live streamers
     for k, v in streamer_info.items():
-        items = []
         
+        # if there's no data, stream is offline
         if v == None:
-            streamer_formatted[k] = ['Offline']
+            streamer_formatted[k] = ['offline']
+
         else:
+            items = []
+
+            # sets up recursive function to go through dictionary and nests
+            # if a key is in the stream_keys, it adds it to the data returned list
             def getvalue(d):
                 for k, v in d.items():
                     if isinstance(v, dict):
@@ -108,20 +113,17 @@ def get_info(client):
 
             getvalue(v)
 
-        streamer_formatted[k] = items
-    
-    print(streamer_formatted)
-
-    logger.info("LIVE STREAMS ********************")  
+            streamer_formatted[k] = items
+ 
+    # logs streams
     logger.info(streamer_formatted)
 
     return streamer_formatted
 
+
 # main still testing
 def main():
     client = get_client() # creates client
-    stuff = get_info(client)    # gets info
+    data = get_info(client)    # gets info
     
-    print(stuff)
-
-main()
+    return data

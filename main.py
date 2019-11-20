@@ -1,7 +1,7 @@
 """
 @Christian Bull
 Created: 11/12/2019
-Updated: 11/18/2019
+Updated: 11/19/2019
 
 This is a basic slack bot that posts custom notifications
 
@@ -22,18 +22,7 @@ def post_message(msg):
     data_json = json.dumps(msg)
     requests.post(hook, data=data_json)
 
-test_data = {"text": "test 1 2 3 4"}
 
-post_message(test_data)
-
-"""
-while True:
-    print('test')
-    info = twitchstreams.get_info(client)
-    time.sleep(10)
-
-    #
-"""
 # main
 
 # client = twitchstreams.get_client()
