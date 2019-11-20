@@ -10,7 +10,7 @@ This is a basic slack bot that posts custom notifications
 import time
 import json
 import requests
-import twitchstreams # twitch wrapper
+# import twitchstreams # twitch wrapper
 import secrets       # :wala:
 
 # slack and twitch info
@@ -35,7 +35,8 @@ while True:
     #
 """
 # main
-client = twitchstreams.get_client()
+
+# client = twitchstreams.get_client()
 
 # check stream data
 
