@@ -10,7 +10,6 @@ The only catch of this app is that it's stateless. Meaning it doesn't store any 
 
 Clone repository:  
 `$ git clone https://github.com/Christian-Bull/slack-notify.git`  
-`$ pip install -r requirements.txt`
 
 
 Setup `./secrets.py`
@@ -26,4 +25,27 @@ def client_id():
 def bot_test():
     hookcity = <slack_webhook>
     return hookcity
+```  
+<br>
+
+In `./twitchstreams.py`, set which channel names you'd like the bot to ping
 ```
+streams = [
+        'stream1',
+        'stream2',
+        etc...
+        ]
+```
+
+<br>
+
+Build docker image:  
+`$ sudo docker build . -t slack-notify`
+
+Run docker image:  
+`$ sudo docker run -d slack-notify`
+
+Note that the docker uses the base image of `python:3.7-alpine`  
+
+
+
