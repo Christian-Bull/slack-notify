@@ -11,18 +11,20 @@ from secrets import client_id
 streams = [
         'odablock',
         'thekraut',
-        'amenityrs'
+        'amenityrs',
+        'wooxsolo',
+        'b0aty'
         ]
 
 stream_keys = [
-        'name',         # 0
-        'id',           # 1  
-        'stream_type'   # 2
-        'viewers',      # 3
+        'name',         # 8
+        'id',           # 0  
+        'stream_type',  # 4
+        'viewers',      # 2
         'url',          # 4
-        'game',         # 5
-        'status'        # 6
-        'created_at'    # 7
+        'game',         # 1
+        'status',       # 5
+        'created_at'    # 3
         ]
 
 
