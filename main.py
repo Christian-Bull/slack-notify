@@ -39,7 +39,7 @@ def send_message(stream_data):
         if v[0] == 'offline':
             continue
 
-        # if stream created time is in the last 6 min, post it yo
+        # if stream created time is in the last 5 min, post it yo
         elif v[3] > time_const:
             name = k
             stream_type = v[4]
@@ -61,4 +61,8 @@ def main():
     send_message(data)
 
 
-main()
+while True:
+    main()
+    time.sleep(300)
+
+
