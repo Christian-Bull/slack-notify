@@ -1,3 +1,4 @@
 secrets.py
 logger.py
 __pycache__
+./logs

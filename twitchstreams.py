@@ -6,15 +6,9 @@ import logging
 from twitch import TwitchClient
 from secrets import client_id
 
-# define channel names to check here, this is a stateless app
-# otherwise I'd define these externally somehow
-streams = [
-        'odablock',
-        'thekraut',
-        'amenityrs',
-        'wooxsolo',
-        'b0aty'
-        ]
+# pulls in channel names from txt file
+with open('streamers.txt', 'r') as f:
+    streams = f.read().split('\n')
 
 stream_keys = [
         'name',         # 8
@@ -27,21 +21,19 @@ stream_keys = [
         'created_at'    # 3
         ]
 
-
 # sets some logging up
 now = datetime.now().date()
 
 logging.basicConfig(
     filename='./logs/log-{}.log'.format(now),
     filemode='w',
-    format='%(asctime)s %(message)s'    
+    format='%(asctime)s-%(levelname)s-%(message)s'    
 )
 
 logger = logging.getLogger()
 
 # debug mode
 logger.setLevel(logging.DEBUG)
-logger.info('This bot is baaaad')
 logger.info('Logging started')
 
 
@@ -51,15 +43,15 @@ def get_client():
         client = TwitchClient(client_id())
         logger.info("Twitch client connection successful")
         return client
-    except:
-        logger.error("Twitch client connection unsuccessful ERRORLMAO")
+    except Exception as e:
+        logger.error("Twitch client connection unsuccessful", exc_info=True)
 
 
 def get_ids(client):
     try:
         users = client.users.translate_usernames_to_ids(streams)
-    except:
-        print('unable to get ids for specified users')
+    except Exception as e:
+        logger.error("Stream IDs unsuccesful", exc_info=True)
 
     degenerates = {}
 
@@ -70,6 +62,7 @@ def get_ids(client):
     return degenerates
 
 def get_streams(client):
+    logger.info("Getting stream info")
     u = get_ids(client)
 
     streamers = {}
@@ -87,6 +80,7 @@ def get_streams(client):
 
 # gets info about live users
 def get_info(client):
+    logger.info("Finding live streams")
 
     # creates buckets
     streamer_info = get_streams(client)
