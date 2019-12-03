@@ -1,10 +1,6 @@
 # Slack-Notify
 
-This is a basic slack notification bot using Python. I know this has been done over a _thousand_ times, but trust this one will be the best! (not even close)
-
-This specific use case is to notify a slack channel if a user goes live on twitch.
-
-The only catch of this app is that it's stateless. Meaning it doesn't store any data, and all references must be made in memory. Which made the code a little more _spicy_ than normal. Basically what I'm saying is that when you notice bad code, this is my excuse.
+This is a basic slack notification bot using Python. This specific use case is to notify a slack channel if a user goes live on twitch.
 
 ### Setup
 
@@ -28,13 +24,11 @@ def bot_test():
 ```  
 <br>
 
-In `./twitchstreams.py`, set which channel names you'd like the bot to ping
+In `./streamers.txt`, set which channel names you'd like the bot to ping. Put each channel name on a separate line.
 ```
-streams = [
-        'stream1',
-        'stream2',
-        etc...
-        ]
+streamer1
+streamer2
+etc.
 ```
 
 <br>
@@ -46,6 +40,19 @@ Run docker image:
 `$ sudo docker run -d slack-notify`
 
 Note that the docker uses the base image of `python:3.7-alpine`  
+<br>
 
+## Notes
 
+This is currently set to run every 5 mins as definied in `./main.py`. A better setup would be to setup would be to run it as a job every x mins when you deploy it. Either by cronjobs or k8s equivelant.
 
+Replace:
+```
+while True:
+    main()
+    time.sleep(300)
+```
+With:
+```
+main()
+```
