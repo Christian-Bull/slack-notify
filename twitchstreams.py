@@ -1,6 +1,7 @@
 # Christian Bull
 # Gets twitch streams as defined by the users
 
+import sys
 from datetime import datetime
 import logging
 from twitch import TwitchClient
@@ -25,8 +26,7 @@ stream_keys = [
 now = datetime.now().date()
 
 logging.basicConfig(
-    filename='./logs/log-{}.log'.format(now),
-    filemode='w',
+    stream=sys.stdout,
     format='%(asctime)s-%(levelname)s-%(message)s'    
 )
 
@@ -34,8 +34,6 @@ logger = logging.getLogger()
 
 # debug mode
 logger.setLevel(logging.DEBUG)
-logger.info('Logging started')
-
 
 # creates twitch client, logs some stuff yo
 def get_client():
@@ -85,10 +83,10 @@ def get_info(client):
     # creates buckets
     streamer_info = get_streams(client)
     streamer_formatted = {}
-    logger.info(streamer_info)
 
     # finds live streamers
     for k, v in streamer_info.items():
+        logger.info("Found {0}".format(k))
         
         # if there's no data, stream is offline
         if v == None:
@@ -110,9 +108,8 @@ def get_info(client):
             getvalue(v)
 
             streamer_formatted[k] = items
- 
-    # logs streams
-    logger.info(streamer_formatted)
+
+    logger.info("Returning stream info")
 
     return streamer_formatted
 
@@ -121,5 +118,5 @@ def get_info(client):
 def main():
     client = get_client() # creates client
     data = get_info(client)    # gets info
-    
+
     return data
