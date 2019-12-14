@@ -1,14 +1,26 @@
-apiVersion: v1
-kind: Pod
+piVersion: apps/v1
+kind: Deployment
 metadata:
+  namespace: default
   name: slack-notify
+  labels:
+    app: slack-notify
 spec:
-  containers:
-    - name: slack-notify
-      image: csbull55/slack-notify:initial
-      env:
-        - name: PYTHONUNBUFFERED
-          value: "0"
-  imagePullSecrets:
-    - name: slacknotifycred
-  restartPolicy: OnFailure
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slack-notify
+  template:
+    metadata:
+      labels:
+        app: slack-notify
+    spec:
+      containers:
+      - env:
+          - name: PYTHONUNBUFFERED
+            value: "0"
+        image: csbull55/slack-notify:initial
+        name: slack-notify
+        imagePullPolicy: Always
+      imagePullSecrets:
+        - name: slacknotifycred
